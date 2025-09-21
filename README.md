@@ -1,10 +1,12 @@
-# 🐍🪜 Advanced Snake & Ladder Game
+# Advanced Snake & Ladder Game
 
 A feature-rich, customizable Snake & Ladder game implemented in Java with advanced gameplay mechanics and intelligent board generation.
 
-## 🎮 Game Features
+## UML Class Diagram
+![ClassDiagram](ClassDiagram.png)
+## Game Features
 
-### ⭐ Core Features
+### Core Features
 
 - **Dynamic n×n Board**: Play on any board size (minimum 3×3)
 - **Multiple Dice Support**: Use 1-3 dice simultaneously
@@ -12,7 +14,7 @@ A feature-rich, customizable Snake & Ladder game implemented in Java with advanc
 - **Human & Bot Players**: Mix of interactive human players and automated bots
 - **Smart Entity Placement**: Intelligent snake and ladder positioning with conflict prevention
 
-### 🎯 Advanced Game Rules
+### Advanced Game Rules
 
 - **Exact Win Condition**: Must land exactly on the final cell to win
 - **Extra Turns on 6**: Rolling a 6 on any dice grants another turn
@@ -20,7 +22,7 @@ A feature-rich, customizable Snake & Ladder game implemented in Java with advanc
 - **Row-Spanning Entities**: Snakes and ladders must span across different rows
 - **No Entity Conflicts**: No overlapping snakes/ladders or circular paths
 
-## 🏗️ Architecture
+##  Architecture
 
 ### Class Structure
 
@@ -88,7 +90,7 @@ java Main
 ### Board Layout
 
 ```
-🎯 Example 5×5 Board:
+Example 5×5 Board:
 21  22  23  24  25
 20  19  18  17  16
 11  12  13  14  15
@@ -137,13 +139,13 @@ if (landOnOccupiedCell()) {
 ### 1. Initialization Phase
 
 ```
-📝 Configuration Input
+ Configuration Input
 ├── Board dimension (n×n)
 ├── Number of dice (1-3)
 ├── Number of players (≥2)
 └── Player types (Human/Bot)
 
-🎲 Board Generation
+ Board Generation
 ├── Calculate entity count
 ├── Generate valid snakes
 ├── Generate valid ladders
@@ -153,7 +155,7 @@ if (landOnOccupiedCell()) {
 ### 2. Game Loop
 
 ```
-🔄 Turn Sequence
+ Turn Sequence
 ├── Display current player
 ├── Show current position
 ├── Roll dice
@@ -168,14 +170,14 @@ if (landOnOccupiedCell()) {
 ### 3. End Game
 
 ```
-🏆 Victory Conditions
+ Victory Conditions
 ├── Player reaches exact final position
 ├── Display winner announcement
 ├── Show final leaderboard
 └── Display final board state
 ```
 
-## 🔧 Technical Implementation
+##  Technical Implementation
 
 ### Intelligent Entity Generation
 
@@ -215,7 +217,7 @@ for (int row = boardDimension - 1; row >= 0; row--) {
 }
 ```
 
-## 🎯 Example Game Session
+##  Example Game Session
 
 ```
 === WELCOME TO ADVANCED SNAKE AND LADDER GAME ===
