@@ -13,10 +13,18 @@ public class GameEngine {
         this.currentPlayerIndex = 0;
         this.gameEnded = false;
         this.winner = null;
+
+        // Add all players to the board
+        for (Player player : players) {
+            board.addPlayer(player);
+        }
     }
 
     public void startGame() {
         System.out.println("=== SNAKE AND LADDER GAME STARTED ===");
+        System.out.println("Board: " + board.getBoardDimension() + "x" + board.getBoardDimension() +
+                " (" + board.getSize() + " cells)");
+        System.out.println("Dice: " + DIceSet.getInstance().getNumberOfDice() + " dice");
         System.out.println("Players: ");
         for (int i = 0; i < players.size(); i++) {
             System.out.println((i + 1) + ". " + players.get(i).getName());
@@ -34,41 +42,53 @@ public class GameEngine {
 
     private void playTurn() {
         Player currentPlayer = players.get(currentPlayerIndex);
+        boolean getExtraTurn = false;
 
-        System.out.println("--- " + currentPlayer.getName() + "'s turn ---");
-        System.out.println("Current position: " + currentPlayer.getPosition());
+        do {
+            System.out.println("--- " + currentPlayer.getName() + "'s turn ---");
+            System.out.println("Current position: " + currentPlayer.getPosition());
 
-        // Player takes turn (rolls dice)
-        int diceRoll = currentPlayer.takeTurn();
+            // Player takes turn (rolls dice)
+            DIceSet.DiceRollResult diceResult = currentPlayer.takeTurn();
+            int oldPosition = currentPlayer.getPosition();
 
-        // Move player on board
-        int newPosition = board.movePlayer(currentPlayer, diceRoll);
+            // Move player on board
+            int newPosition = board.movePlayer(currentPlayer, diceResult);
 
-        System.out.println(currentPlayer.getName() + " moved from " +
-                (currentPlayer.getPosition() - diceRoll) + " to " + newPosition);
+            System.out.println(currentPlayer.getName() + " moved from " + oldPosition + " to " + newPosition);
 
-        // Check for win condition
-        if (board.hasWinner(currentPlayer)) {
-            winner = currentPlayer;
-            gameEnded = true;
-            return;
-        }
+            // Check for win condition
+            if (board.hasWinner(currentPlayer)) {
+                winner = currentPlayer;
+                gameEnded = true;
+                return;
+            }
 
-        // Move to next player
-        currentPlayerIndex = (currentPlayerIndex + 1) % players.size();
+            // Check if player gets extra turn (rolled a 6)
+            getExtraTurn = diceResult.hasSix();
+            if (getExtraTurn && !gameEnded) {
+                System.out.println("🎲 " + currentPlayer.getName() + " rolled a 6! Gets another turn! 🎲");
+            }
 
-        // Print current game state
-        System.out.println("\nCurrent positions:");
-        for (Player player : players) {
-            System.out.println(player.getName() + ": " + player.getPosition());
-        }
-        System.out.println();
+            // Print current game state
+            System.out.println("\nCurrent positions:");
+            for (Player player : players) {
+                System.out.println(player.getName() + ": " + player.getPosition());
+            }
+            System.out.println();
 
-        // Add a small pause between turns for readability
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
+            // Add a small pause between turns for readability
+            try {
+                Thread.sleep(1500);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+
+        } while (getExtraTurn && !gameEnded);
+
+        // Move to next player only if current player doesn't get extra turn
+        if (!gameEnded) {
+            currentPlayerIndex = (currentPlayerIndex + 1) % players.size();
         }
     }
 

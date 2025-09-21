@@ -27,11 +27,11 @@ public class HumanPlayer implements Player {
     }
 
     @Override
-    public int takeTurn() {
+    public DIceSet.DiceRollResult takeTurn() {
         System.out.print(name + ", press Enter to roll the dice...");
         scanner.nextLine();
-        int diceRoll = DIceSet.getInstance().roll();
-        System.out.println(name + " rolled: " + diceRoll);
-        return diceRoll;
+        DIceSet.DiceRollResult result = DIceSet.getInstance().roll();
+        System.out.println(name + " rolled: " + result);
+        return result;
     }
 }

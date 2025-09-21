@@ -23,10 +23,8 @@ public class BotPlayer implements Player {
     }
 
     @Override
-    public int takeTurn() {
-        // Bot automatically rolls the dice
-        int diceRoll = DIceSet.getInstance().roll();
-        System.out.println(name + " (Bot) rolled: " + diceRoll);
+    public DIceSet.DiceRollResult takeTurn() {
+        System.out.println(name + " (Bot) is rolling the dice...");
 
         // Add a small delay to make it feel more natural
         try {
@@ -35,6 +33,8 @@ public class BotPlayer implements Player {
             Thread.currentThread().interrupt();
         }
 
-        return diceRoll;
+        DIceSet.DiceRollResult result = DIceSet.getInstance().roll();
+        System.out.println(name + " (Bot) rolled: " + result);
+        return result;
     }
 }

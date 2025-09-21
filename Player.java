@@ -5,5 +5,5 @@ public interface Player {
 
     void setPosition(int position);
 
-    int takeTurn();
+    DIceSet.DiceRollResult takeTurn();
 }
